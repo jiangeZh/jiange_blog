@@ -1,0 +1,28 @@
+{% extends "./base.html"%}
+
+{% block main%}
+<div id="jiange-main">
+	<div id="jiange-content" class="container">
+<div class="row">
+    <div id="jiange-content" class="col-md-8 col-lg-9">
+        <div id="all-post-list" class="well">
+            {% if article_list %}
+            {% with post_list=article_list %}
+            {% for post in post_list %} 
+                {% include "./include/category_post.html"%}
+            {% endfor %}
+            {% endwith %}
+            {% endif %}
+        </div>
+        
+        <!--分页 -->
+        {% if page_obj%}
+        {% include "./include/pagination.html"%}
+        {% endif %}
+    </div>
+    {% include "./include/sidebar.html"%}
+</div>
+	</div>
+    {% include "./include/footer.html"%}
+</div>
+{% endblock %}

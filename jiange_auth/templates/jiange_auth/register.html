@@ -1,0 +1,81 @@
+<div id="jiange-auth-register">
+    <div class="panel panel-jiange-auth">
+        <div class="panel-heading">
+            <h3 class="panel-title">注册</h3>
+        </div>
+        <form id="jiange-auth-register-form" class="form-horizontal clearfix" method="post" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="jiange-auth-register-username" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="jiange-auth-register-username" 
+                            placeholder="请输入用户名">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="jiange-auth-register-email" class="col-sm-2 control-label">email</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="jiange-auth-register-email" 
+                            placeholder="请输入email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="jiange-auth-register-password2" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="jiange-auth-register-password1" 
+                            placeholder="请输入密码">
+                </div>
+            </div>
+
+            <div class="form-group"> 
+                <label for="jiange-auth-register-password2" class="col-sm-2 control-label">确认密码</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" id="jiange-auth-register-password2" 
+                            placeholder="请再次输入密码">
+                </div>
+            </div>
+            <br/>
+            
+            <button id="jiange-auth-register-button" type="submit" class="btn btn-jiange-auth pull-right">提交</button>
+        </form>
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+   $('#jiange-auth-register-form').submit(function(){
+        $.ajax({
+            type:"POST",
+            url:"/usercontrol/register",
+            data:{"username":$("#jiange-auth-register-username").val(),"email":$("#jiange-auth-register-email").val(),
+                  "password1":$("#jiange-auth-register-password1").val(),"password2":$("#jiange-auth-register-password2").val(),},
+            dataType:'json',
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data,textStatus){
+                var errors = data["errors"];
+                if(errors.length==0){
+                     location.replace("/");
+                }
+                else{
+                    //alert(errors);
+                    var html = "<div class=\"alert alert-danger\">"
+                    for (var key in errors){
+                        html += errors[key]+"<br/>";
+                    }
+                    html += "</div>";
+                    $("#jiange-auth-register .panel-heading").after(html);
+                }
+                
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        })
+        return false;
+    });
+
+    $("#jiange-auth-register-button").click(function(){
+        $("#jiange-auth-register .alert").remove();
+    }); 
+</script>

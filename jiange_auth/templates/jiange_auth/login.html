@@ -1,0 +1,62 @@
+<div id="jiange-auth-login">
+    <div class="panel panel-jiange-auth">
+        <div class="panel-heading">
+            <h3 class="panel-title">请登陆</h3>
+        </div>
+        <form id="jiange-auth-login-form" class="clearfix" method="post" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                    <input id="jiange-auth-login-username"type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </div>
+                    <input id="jiange-auth-login-password" type="password" class="form-control">
+                </div>
+            </div>
+            <div id="jiange-auth-forgetpassword"><a href="/forgetpassword/">忘记密码?</a></div>
+            <button id="jiange-auth-login-button" type="submit" class="btn btn-jiange-auth pull-left">登录</button>
+            <a href="/register" type="button" class="btn btn-jiange-auth pull-right">注册</a>
+        </form>
+    </div>
+</div>
+
+
+<script language="javascript" type="text/javascript">
+    $('#jiange-auth-login-form').submit(function(){
+        $.ajax({
+            type:"POST",
+            url:"/usercontrol/login",
+            data:{"username":$("#jiange-auth-login-username").val(),"password":$("#jiange-auth-login-password").val()},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data,textStatus){
+                var errors = data["errors"];
+                if(errors.length==0){
+                    location.replace("/"); 
+                }
+                else{
+                    //alert(errors);
+                    var str = ""
+                    for (var key in errors){
+                        str += errors[key]+"\n";
+                    }
+                    alert(str);
+                }
+                
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+        });
+        return false;
+    }); 
+</script>

@@ -1,0 +1,68 @@
+{% extends "./base.html" %}
+
+{%block main%}
+<div class="splash-container">
+    	<div class="splash">
+      	  <h1 class="splash-head">Jiange's Home</h1>
+       	 	<p class="splash-subhead">
+        	    Welcome to my site, nice to meet you!
+      	  	</p>
+   	 	</div>
+	</div>
+
+    <!-- 文章列表 与 侧边的东西 -->
+    <div id="jiange-main" class="content-wrapper">
+        <div id="jiange-content" class="container">
+
+<div class="row">
+    <div id="jiange-content" class="col-md-8 col-lg-9">
+        <!-- 公告栏 -->
+        <div class="well alert hidden-xs fade in">
+            <button class="close" data-dismiss="alert" type="button">&times;</button>
+            欢迎来到
+            <a href="" target="_blank">Jiange的个人博客</a>
+            ,欢迎联系我：jiangezh@qq.com
+        </div>
+		<!-- 响应式搜索栏，手机可见 -->
+        <div class="visible-xs">
+            <div class="search">
+                <form class="form-inline clearfix" role="form" method="get" action="/search/"> 
+                    <input type="text" class="form-control" id="top-s" name="s">
+                    <button class="btn btn-jiange">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- 首页文章列表 -->
+        <div id="home-post-list">
+            <!-- 首页轮播 -->
+            {% if carousel_page_list%}
+            {% include "./include/carousel.html"%}
+            {% endif%}
+
+            <!--首页文章列表 -->
+            {% if article_list %}
+            {% with post_list=article_list %}
+            {% for post in post_list %}
+                {% include "./include/home_post.html" %}
+            {% endfor %}
+            {% endwith %}
+            {% endif %}
+
+            <!--分页 -->
+            {% if page_obj%}
+            {% include "./include/pagination.html"%}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 右边的widgets -->
+	{% include "./include/sidebar.html"%}
+</div>
+
+	</div>
+	{% include "./include/footer.html"%}
+</div>
+
+{% endblock %}

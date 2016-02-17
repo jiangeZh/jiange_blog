@@ -1,0 +1,95 @@
+/*按钮样式*/
+.btn-jiange-comments{
+    color: #FFF;
+    background-color: #D9534F;
+    border-color: #D43F3A;
+}
+
+/*panel 样式*/
+.panel-jiange-comments{
+    box-shadow: 0px 0px 5px #C2C2C2;
+    border-color:#EEE;
+}
+
+.panel-jiange-comments .panel-heading{
+    color: #EEE;
+    background-color: #2d3e50;
+    border-color: #EEE;
+}
+
+.panel-jiange-comments .input-group-addon{
+    color: #EEE;
+    background-color: #2d3e50;
+    border:2px solid #3D4450;
+}
+
+.panel-jiange-comments .badge{
+    background-color:#D94600;
+}
+
+.panel-jiange-comments span.btn{
+    padding:0px;
+    margin-right:5px;
+}
+
+/*评论框****************/
+.jiange-comment ul{
+    padding-left:0px;
+}
+.jiange-comment ul li{
+    list-style-type:none;
+    border-top:1px dotted #ddd;
+    padding:10px;
+}
+
+.jiange-comment-tx {
+    float:left;
+}
+
+.jiange-comment-content{
+    padding-left:50px;
+    word-break: break-all;
+}
+
+.jiange-comment-content h1{
+    margin:0px;
+    font-size:15px;
+    padding-bottom:10px;
+}
+
+.jiange-comment-edit {
+    padding-left:50px;
+    margin-bottom:20px;
+}
+
+.jiange-comment-edit textarea{
+    width:100%;
+    margin-bottom:10px;
+}
+
+.jiange-comment-edit button{
+
+}
+
+/***********************/
+
+
+/*首页右侧的 comment面板样式*/
+.comment-tx {
+    float:left;
+}
+
+.comment-info {
+    padding-left:20%;
+}
+
+.comment-username a{
+    color: #438904;
+    font-size: 14px;
+}
+
+.comment-content {
+    word-break:break-all;
+}
+
+/***********************/

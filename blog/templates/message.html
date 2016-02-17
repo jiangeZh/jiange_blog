@@ -1,0 +1,81 @@
+{% extends "./base.html" %}
+
+{% block main %}
+<div id="jiange-main">
+	<div id="jiange-content" class="container">
+<div class="well">
+    <div class="jiange-comment">
+        <div class="jiange-comment-tx">
+            {% if user.img%}
+            <img src="{{user.img}}" width="40"></img>
+            {%else%}
+            <img src="http://jiange.qiniudn.com/image/tx/tx-default.jpg" width="40"></img>
+            {%endif%}
+        </div>
+        <div class="jiange-comment-edit clearfix">
+            <form id="jiange-comment-form" method="post" role="form">
+                {% csrf_token %}
+                <textarea id="message" name="message" class="form-control" rows="4" placeholder="请输入留言 限200字!"></textarea>
+				<div class="pull-right">
+					<br>				
+					公开<input type="radio" checked="checked" name="Message-status" id="public" value="0" />
+					悄悄话<input type="radio" name="Message-status" id="private" value="1" />
+					</br><br>
+                	<button type="submit" class="btn btn-jiange-comments">提交</button>
+					</br>      
+				</div>      
+			</form>
+        </div>
+        <ul>
+            {% for message in message_list%}
+            <li>
+            <div class="jiange-comment-tx">
+                {% if message.user.img %}
+                <img src={{message.user.img}} width="40"></img>
+                {%else%}
+                <img src="http://jiange.qiniudn.com/image/tx/tx-default.jpg" width="40"></img>
+                {%endif%}
+            </div>
+            <div class="jiange-comment-content">
+                <a><h1>{{message.user.username}}</h1></a>
+                <p>
+                    {% autoescape on%}
+                    {{message.message}}
+                    {% endautoescape %}
+                </p>
+                <p>{{message.create_time|date:"Y-m-d H:i:s" }}</p>
+            </div>
+            </li>
+            {% endfor%}
+        </ul>
+    </div>
+</div>
+	</div>
+    {% include "./include/footer.html"%}
+</div>
+
+<script language="javascript" type="text/javascript">
+    $('#jiange-comment-form').submit(function(){
+        $.ajax({
+            type:"POST",
+            url:"/message/send",
+            data:{"message":$("#message").val(), "status":$("input[type='radio']:checked").val()},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data,textStatus){
+                $("#message").val("");
+				$("input[type='radio']").eq(0).attr('checked',true);
+                $(".jiange-comment ul").prepend(data);
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+
+            }
+
+        });
+        return false;
+    }); 
+</script>
+
+{% endblock %}
